@@ -1,0 +1,40 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #4f928d, #a2d4c4); /* 渐变背景 */
+    padding: 15px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 柔和阴影 */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand a {
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar-menu {
+    display: flex;
+    gap: 5px; /* 更现代的间距 */
+}
+
+.navbar-item {
+    padding: 6px 8px;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 平滑过渡 */
+}
+
+.navbar-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px); /* 微抬效果 */
+}
+
+a {
+    text-decoration: none;
+}

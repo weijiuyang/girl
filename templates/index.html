@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIRLS</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="manifest" href="../static/manifest.json">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: black;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 237, 185);
+            color: rgb(74, 74, 74);
+            padding: 10px 20px;
+        }
+
+        .navbar-brand a {
+            color: rgb(74, 74, 74);
+            font-size: 1.2em;
+        }
+
+        .navbar-menu {
+            display: flex;
+        }
+
+        .navbar-item {
+            padding: 10px 15px;
+            color: rgb(74, 74, 74);
+        }
+
+        /* 主要内容区域 */
+        .content {
+            padding: 20px;
+        }
+
+        article {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+        article h1 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        article small {
+            color: #888;
+        }
+
+        article p {
+            margin-bottom: 15px;
+        }
+
+        /* 分页导航 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination-list a {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .pagination-link:hover {
+            background-color: #ddd;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .footer-link a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+        .app-title {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .section {
+            margin: 20px;
+        }
+        .game-title a {
+            text-decoration: none;
+        }        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .game-card {
+            background-color:black;
+            border-radius: 8px;
+            margin :10px;
+            width: 160px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .game-card img {
+            width: 100%;
+            aspect-ratio: 3 / 5;
+            object-fit: cover; /* 保持纵横比，同时填充整个元素的内容框 */
+            border-radius: 8px;
+        }
+
+        .game-title {
+            font-weight: lighter;
+            margin: 10px 0;
+            color: antiquewhite;
+        }
+        .game-title img {
+            height: 1em; /* 设置图片高度与当前字体大小相同 */
+            width: auto; /* 保持图片的宽高比 */
+            margin-right: 5px; /* 在图片和文字之间添加一些间隔 */
+        }
+
+        .game-description {
+            font-size: 14px;
+            color: #666;
+        }
+        .selected {
+            border: 2px solid #4c93af; 
+        }
+        #createButton {
+            display: none;
+            background-color: #111211; /* 绿色背景 */
+            color: white; /* 白色文字 */
+            padding: 10px 20px; /* 内边距 */
+            border: none; /* 无边框 */
+            border-radius: 5px; /* 圆角边框 */
+            cursor: pointer; /* 鼠标悬停时的手形光标 */
+            font-size: 16px; /* 字体大小 */
+            margin-top: 20px; /* 上边距 */
+            transition: background-color 0.3s; /* 背景颜色过渡效果 */
+        }
+    
+        #createButton:hover {
+            background-color: #51565b; /* 鼠标悬停时的背景颜色 */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            height: 100px; /* 容器高度，根据需要调整 */
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <main>
+        <div class="app-container">
+            {% for info in infos %} 
+                <div class="game-card" onclick="toggleSelect(this)">
+                    <a href="/xiutakugirl/{{ info['info'] }} ">
+                        <img src="{{ url_for('static', filename='images/preview/' +  info.get('info', 'default') + '.webp' ) }}" alt="Chatgpt app">
+                    </a>
+                    <div class="game-title"> 
+                        <p>{{ info['albumn'] }}</p>
+                        {{ info['name'] }} 
+                    </div>
+                    <p class="game-description" contenteditable="true" code="{{info['code']}}"> {{info['comment']}} </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- <a href="/delete_current/"> -->
+        <nav class="pagination">
+
+            <div class="pagination-list">
+                <a class="pagination-link" href="#">上一页</a>
+                <a class="pagination-link" href="#">1</a>
+                <a class="pagination-link" href="#">2</a>
+                <!-- 更多分页链接 -->
+                <a class="pagination-link" href="#">下一页</a>
+            </div>
+        </nav>
+        <button onclick="collectAndSendData()">删除当前所有专辑</button>
+
+    </main>
+
+    <footer>
+        <div class="footer-link">
+            <a href="/">网站链接</a>
+        </div>
+    </footer>
+    <script>
+        function toggleSelect2(card) {
+            card.classList.toggle("selected");
+        
+            // 检查是否有任何卡片被选中
+            var selectedCards = document.querySelectorAll('.game-card.selected');
+            var createButton = document.getElementById('createButton');
+            if (selectedCards.length > 0) {
+                createButton.style.display = 'block';
+            } else {
+                createButton.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        if (navigator.setAppBadge) {
+            console.log('ffff');
+        } else {
+            console.log('kkkkk');
+        }
+    </script>
+    <script>
+        function collectAndSendData() {
+            var infos = [
+                {% for info in infos %}
+                    "{{ info['info'] }}"{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            // 发送 AJAX 请求到后端
+            $.ajax({
+                type: "POST",
+                url: "/delete_infos",
+                contentType: "application/json",
+                data: JSON.stringify({ infos: infos }),
+                success: function(response) {
+                    console.log("Data sent successfully:", response);
+                    window.location.href='/';
+                },
+                error: function(error) {
+                    console.error("Error sending data:", error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

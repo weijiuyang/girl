@@ -1,0 +1,19 @@
+{
+    "name": "Girls",
+    "short_name": "Girls",
+    "icons": [
+      {
+        "src": "/static/a.jpg",
+        "sizes": "256x256",
+        "type": "image/jpg"
+      },
+      {
+        "src": "/static/a.jpg",
+        "sizes": "512x512",
+        "type": "image/jpg"
+      }
+    ],
+    "theme_color": "#333333",
+    "background_color": "#333333",
+    "display": "standalone"
+  }

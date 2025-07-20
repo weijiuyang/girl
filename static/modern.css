@@ -1,0 +1,212 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* 现代字体栈 */
+    line-height: 1.6;
+    background-color: #797777; /* 深色背景，更现代 */
+    color: #e0e0e0; /* 柔和的文字颜色 */
+}
+
+
+
+/* 主要内容区域 */
+.content {
+    padding: 40px;
+    max-width: 1200px; /* 限制宽度，现代布局 */
+    margin: 0 auto;
+}
+
+article {
+    background: #2a2a2a; /* 暗色卡片 */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* 更强的阴影 */
+    transition: transform 0.3s ease;
+}
+
+article:hover {
+    transform: translateY(-5px); /* 悬停时浮起 */
+}
+
+a {
+    text-decoration: none;
+    color: #60a5fa; /* 现代蓝色链接 */
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #93c5fd;
+}
+
+article h1 {
+    font-size: 1.8em;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+article small {
+    color: #a0a0a0;
+    font-size: 0.9em;
+}
+
+article p {
+    margin-bottom: 15px;
+    color: #d0d0d0;
+}
+
+/* 分页导航 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.pagination-list a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-list a:hover {
+    background-color: #4a4a4a;
+    transform: scale(1.05); /* 放大效果 */
+}
+
+/* 页脚样式 */
+footer {
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.footer-link a {
+    color: #93c5fd;
+    padding: 0 5px;
+}
+
+.footer-link a:hover {
+    color: #60a5fa;
+}
+
+/* 应用容器 */
+.app-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 现代网格布局 */
+    gap: 20px;
+    padding: 20px;
+}
+
+.app-title {
+    font-size: 1.2em;
+    margin: 15px 0;
+    color: #fff;
+    font-weight: 500;
+}
+
+.section {
+    margin: 40px 0;
+}
+
+.section-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* 游戏卡片 */
+.game-card {
+    background: #252525;
+    border-radius: 12px;
+    margin: 0;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    overflow: hidden; /* 防止内容溢出圆角 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 3 / 5;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0; /* 只圆角顶部 */
+}
+
+.game-title {
+    margin: 15px 0;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-title img {
+    height: 1.2em;
+    width: auto;
+    margin-right: 8px;
+}
+
+.game-description {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    padding: 0 10px 15px;
+}
+
+/* 选中状态 */
+.selected {
+    border: 3px solid #60a5fa;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); /* 发光效果 */
+}
+
+/* 按钮组 */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.simple-button {
+    background: linear-gradient(135deg, #34d399, #059669); /* 现代渐变绿色 */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.simple-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4);
+}
+
+#createButton {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed); /* 紫色渐变 */
+}
+
+#createButton:hover {
+    box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4);
+}

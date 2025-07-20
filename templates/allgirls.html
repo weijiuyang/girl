@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIRLS</title>
+    <link rel="manifest" href="../static/mainfest.json">
+    <link rel="stylesheet" href="../static/modern.css">
+    <link rel="stylesheet" href="../static/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="app-container">
+            {% for girl in girls %}
+                <div class="game-card" onclick="toggleSelect(this)">
+                    <a href="/girl/{{ girl }} ">
+                        <img src="/static/images/girls/{{ girl}}.webp" alt="图片">
+                    </a>
+
+                    <a href="/girlfav/{{ girl }} ">
+                        <div class="game-title">
+                            <p> {{ girl }} </p>
+                        </div>
+                    </a>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav class="pagination">
+            <div class="pagination-list">
+                <a class="pagination-link" href="#">上一页</a>
+                <a class="pagination-link" href="#">1</a>
+                <a class="pagination-link" href="#">2</a>
+                <a class="pagination-link" href="#">下一页</a>
+            </div>
+        </nav>
+        <input type="hidden" id="offsetVal" value="{{ offset }}">
+
+    </main>
+
+    <footer>
+        <div class="footer-link">
+            <a href="/">网站链接</a>
+        </div>
+    </footer>
+
+
+</body>
+</html>

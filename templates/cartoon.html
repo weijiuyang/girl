@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Girls</title>
+  <link rel="manifest" href="../static/manifest.json">
+  <link rel="stylesheet" href="../static/cartoon.css">
+  <link rel="stylesheet" href="../static/navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <div class="header">
+    <h1>{{ albumn }} - {{ girl }}</h1>
+  </div>
+  <div class="timestamp">
+    <a href="/girl/{{ girl }}">{{ girl }}</a>
+    <a href="/albumn/{{ albumn }}">{{ albumn }}</a>
+  </div>
+  <div style="color: #fff;">{{ name }}</div>
+
+  <a href="/xiutakugirl/{{ name }}?showtype=albumn" style="color: #fff;"> turn to albumn </a>
+
+  <div class="gallery">
+    {% for image, rating in images %}
+    <div class="img-contain {% if rating %} liked{% endif %}" data-image="{{ image }}" data-name="{{ name }}">
+      <img src="/static/images/albumn/{{image}}" alt="描述" onload="checkImageOrientation(this)">
+      <div class="icons">
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-trash"></i>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function checkImageOrientation(img) {
+      const imgContain = img.parentElement;
+
+      // 如果图片有 liked 类，则直接返回，不调整大小
+      if (imgContain.classList.contains('liked')) {
+        return;
+      }
+
+      const isPortrait = img.naturalHeight > img.naturalWidth;
+
+      if (isPortrait) {
+        imgContain.classList.add('portrait');
+      } else {
+        imgContain.classList.remove('portrait');
+      }
+
+      // 检查前后两张图片是否都是竖向图片
+      const gallery = document.querySelector('.gallery');
+      const imgContainers = Array.from(gallery.querySelectorAll('.img-contain.portrait:not(.liked)'));
+
+      for (let i = 0; i < imgContainers.length - 1; i++) {
+        const current = imgContainers[i];
+        const next = imgContainers[i + 1];
+
+        if (current && next) {
+          current.classList.add('side-by-side');
+          next.classList.add('side-by-side');
+          i++; // 跳过下一张图片，避免重复处理
+        }
+      }
+    }
+
+  </script>
+</body>
+</html>

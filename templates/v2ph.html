@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>V2PH 图集下载</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            padding: 2rem;
+            background-color: #f8f8f8;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center">V2PH 图集下载</h2>
+
+<form action="/submit_v2ph" method="post">
+    <label for="url">图集网址</label>
+    <input type="text" id="url" name="url" required placeholder="https://www.v2ph.com/album/xxxx.html">
+
+    <label for="cookie">Cookie（可选）</label>
+    <textarea id="cookie" name="cookie" rows="4" placeholder="留空使用默认 Cookie"></textarea>
+    <p class="note">提示：在浏览器中访问图集页面，按 F12 打开开发者工具，在 Network 或 Application 中找到 Cookie。</p>
+
+    <button type="submit">开始下载</button>
+</form>
+
+</body>
+</html>

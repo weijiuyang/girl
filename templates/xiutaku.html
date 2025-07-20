@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIRLS</title>
+    <link rel="manifest" href="../static/manifest.json">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../static/modern.css">
+    <link rel="stylesheet" href="../static/navbar.css">
+
+    <style>
+.banner {
+            width: 95%;
+            max-width: 800px;
+            background-color: #9baeae;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .banner img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .text-content {
+            text-align: left;
+        }
+        .text-content h1 {
+            font-family: Arial, sans-serif;
+            color: #040404;
+            margin: 0;
+            font-size: 28px;
+        }
+        .text-content p {
+            font-family: Arial, sans-serif;
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0 0;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %} 
+    <main>
+        {% if date %}
+        <div style="text-align: center; margin-top: 10px; font-size: 20px; color: #555;">
+            📅 {{ date }}
+        </div>
+        {% endif %}
+        <div class="button-group">
+            <button class="simple-button" onclick="changeDay(1)">前一天</button>
+
+            <button class="simple-button" onclick="findNearest('right')">之前</button>
+            {% if delete_flag %}
+                <button id="createButton" class="simple-button" onclick="collectAndSendData()">删除</button>
+            {% endif %}
+            <button class="simple-button" onclick="findNearest('left')">← 之后</button>
+            <button class="simple-button" onclick="changeDay(-1)">后一天</button>
+        </div>
+        {% if girl %}
+            <div class="banner">
+                <img src="/static/images/girls/{{ girl }}.webp" alt="女孩图片">
+                <div class="text-content">
+                    <a href="/girlfav/{{ girl }} ">
+                        <h1>{{ girl }} </h1>
+                    </a>
+                    <a href="/search/{{ girl }} ">
+                        <h1> 搜索 </h1>
+                    </a>
+                </div>
+
+            </div>
+        {% endif %}
+        <div class="app-container">
+            {% for info in recent_infos %}
+                <div class="game-card" onclick="toggleSelect(this)">
+                    <a href="/xiutakugirl/{{ info['address'] }} ">
+                        <img src="/static/images/preview/{{ info['address'] }}.webp" alt="图片" class="no-cache-img" data-base-src="/static/images/preview/{{ info['address'] }}.webp">
+                    </a>
+                    <div class="game-title">
+                        <p>{% if info['albumn_no']|int != 0 %} No. {{ info['albumn_no'] }} {% endif %}</p>
+                        <p>  {{ info['name'] }} </p>
+                        {{ info['albumn_name'] }}
+                        <p>{% if info['website'] == 'v2ph' %}  {{ info['albumn_name'] }} {% endif %}</p>
+                    </div>
+                    <p class="game-description" contenteditable="true" code="{{info['code']}}"> {{info['comment']}} </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="app-container">
+            {% for info in keygirl_infos %}
+                <div class="game-card" onclick="toggleSelect(this)">
+                    <a href="/xiutakugirl/{{ info['address'] }} ">
+                        <img src="/static/images/preview/{{ info['address'] }}.webp" alt="图片" class="no-cache-img" data-base-src="/static/images/preview/{{ info['address'] }}.webp">
+                    </a>
+                    <div class="game-title">
+                        <p>{% if info['albumn_no']|int != 0 %} No. {{ info['albumn_no'] }} {% endif %}</p>
+                        <p>  {{ info['name'] }} </p>
+                        {{ info['albumn_name'] }}
+                        <p>{% if info['website'] == 'v2ph' %}  {{ info['albumn_name'] }} {% endif %}</p>
+                    </div>
+                    <p class="game-description" contenteditable="true" code="{{info['code']}}"> {{info['comment']}} </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="app-container">
+            {% for info in infos %}
+                <div class="game-card" onclick="toggleSelect(this)">
+                    <a href="/xiutakugirl/{{ info['address'] }} ">
+                        <img src="/static/images/preview/{{ info['address'] }}.webp" alt="图片" class="no-cache-img" data-base-src="/static/images/preview/{{ info['address'] }}.webp">
+                    </a>
+                    <div class="game-title">
+                        <p>{% if info['albumn_no']|int != 0 %} No. {{ info['albumn_no'] }} {% endif %}</p>
+                        <p>  {{ info['name'] }} </p>
+                        <p>{% if info['website'] == 'v2ph' %}  {{ info['albumn_name'] }} {% endif %}</p>
+                    </div>
+                    <p class="game-description" contenteditable="true" code="{{info['code']}}"> {{info['comment']}} </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav class="pagination">
+            <div class="pagination-list">
+                <a class="pagination-link" href="#">上一页</a>
+                <a class="pagination-link" href="#">1</a>
+                <a class="pagination-link" href="#">2</a>
+                <a class="pagination-link" href="#">下一页</a>
+            </div>
+        </nav>
+        <input type="hidden" id="offsetVal" value="{{ offset }}">
+    </main>
+
+    <footer>
+        <div class="footer-link">
+            <a href="/">网站链接</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleSelect(card) {
+            card.classList.toggle("selected");
+            var selectedCards = document.querySelectorAll('.game-card.selected');
+            var createButton = document.getElementById('createButton');
+            if (selectedCards.length > 0) {
+                createButton.style.display = 'block';
+            } else {
+                createButton.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        function collectAndSendData() {
+            var infos = [
+                {% for info in infos %}
+                    "{{ info['address'] }}"{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            // 发送 AJAX 请求到后端
+            $.ajax({
+                type: "POST",
+                url: "/delete_infos",
+                contentType: "application/json",
+                data: JSON.stringify({ infos: infos }),
+                success: function(response) {
+                    console.log("Data sent successfully:", response);
+                    window.location.reload(); // 默认为强制刷新
+                },
+                error: function(error) {
+                    console.error("Error sending data:", error);
+                }
+            });
+        }
+    </script>
+<script>
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    function changeDay(diff) {
+        let currentOffset = parseInt(getQueryParam('offset') || "0");
+        if (isNaN(currentOffset)) {
+            currentOffset = 0;
+        }
+        console.log(currentOffset)
+        let newOffset = currentOffset + diff;
+        console.log(newOffset)
+
+        window.location.href = `/today?offset=${newOffset}`;
+    }
+
+    function findNearest(direction) {
+        let currentOffset = parseInt(getQueryParam('offset') || "0");
+        if (isNaN(currentOffset)) {
+            currentOffset = 0;
+        }
+        if (direction === 'left') {
+            window.location.href = `/today?offset=${currentOffset}&find_left=true`;
+        } else if (direction === 'right') {
+            window.location.href = `/today?offset=${currentOffset}&find_right=true`;
+        }
+    }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('.no-cache-img');
+            images.forEach(img => {
+                const baseSrc = img.getAttribute('data-base-src');
+                const randomParam = Date.now(); // 使用时间戳，或者用 Math.random()
+                img.src = `${baseSrc}?ts=${randomParam}`;
+            });
+        });
+    </script>
+</body>
+</html>

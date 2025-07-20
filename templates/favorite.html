@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Girls</title>
+  <link rel="manifest" href="../static/manifest.json">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+    }
+    .header {
+      color: rgb(237, 233, 233);
+      text-align: center;
+      font-size: 36px;
+    }
+    .timestamp {
+      color: rgb(237, 233, 233);
+      font-size: 1.5em;
+      text-align: justify;
+      margin: 40px;
+    }
+    .content {
+      color: rgb(237, 233, 233);
+      margin: 40px;
+    }
+    label {
+      color: rgb(237, 233, 233);
+    }
+    .gallery {
+      width: 100vw;
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .img-contain {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.5s;
+      width: 23%; /* 设置每个图片容器宽度为 23%，留出一些间隙 */
+      margin: 1%; /* 设置图片之间的间隙 */
+    }
+    .img-contain img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .img-contain .icons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .img-contain .icons i {
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .img-contain .icons i:hover {
+      color: #f00;
+    }
+    .img-contain.liked {
+      border: 2px solid rgb(226, 90, 41);
+    }
+
+    .options {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 5px;
+      border-radius: 5px;
+      color: #fff;
+      z-index: 10;
+    }
+    .option {
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    #ratingForm {
+            background: #040404;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #ratingForm label {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        #ratingForm input[type="radio"] {
+            margin-right: 10px;
+        }
+        #ratingForm input[type="radio"] + label {
+            display: inline-block;
+        }
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <div class="gallery">
+    {% for image in images %}
+    <div class="img-contain {% if rating %} liked{% endif %}" 
+      data-image="{{ image }}" 
+      data-name="{{ name }}"
+      onmousedown="startLongPress(this, '{{ image }}')"
+      onmouseup="endLongPress()"
+      ontouchstart="startLongPress(this, '{{ image }}')"
+      ontouchend="endLongPress()"
+      oncontextmenu="return false;">
+      <img src="/static/images/albumn/{{image}}" alt="描述" loading="lazy">
+      <div class="icons">
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-trash"></i>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    let longPressTimer;
+
+    // 开始长按
+    function startLongPress(element, image, name) {
+      longPressTimer = setTimeout(() => {
+        handleLongPress(image, name); // 处理长按逻辑
+      }, 1000); // 长按时间设置为 1 秒
+    }
+
+    // 结束长按
+    function endLongPress() {
+      clearTimeout(longPressTimer); // 清除计时器
+    }
+
+    // 长按跳转逻辑
+    function handleLongPress(image) {
+      const firstPart = image.split('/')[0];
+      const lastPart = image.split('/')[1];
+      const targetUrl = `/xiutakugirl/${firstPart}?selected_image=${lastPart}`; // 目标 URL
+      console.log("跳转到:", targetUrl);
+      window.location.href = targetUrl; // 跳转到目标 URL
+    }
+  </script>
+  <script>
+
+    const sendRequest = async (url, data) => {
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        return await response.json();
+      } catch (error) {
+        console.error('Error:', error);
+        return null;
+      }
+    };
+
+
+
+    async function handleDelete(imageName, userName) {
+      const imgContain = document.querySelector(`.img-contain[data-image="${imageName}"]`);
+      imgContain.style.transform = 'translateX(-100%)';
+      setTimeout(async () => {
+        const result = await sendRequest('/delete_image', { image: imageName, name: userName });
+        if (result) {
+          imgContain.remove();
+        } else {
+          imgContain.style.transform = 'translateX(0)';
+        }
+      }, 500);
+    }
+
+    document.querySelectorAll('.img-contain').forEach(imgContain => {
+      const heartIcon = imgContain.querySelector('.fa-heart');
+      const trashIcon = imgContain.querySelector('.fa-trash');
+      const options = imgContain.querySelector('.options');
+
+      const handleTouchMove = (e) => {
+        const touch = e.touches[0];
+        const change = touch.clientX - startX;
+        imgContain.style.transform = `translateX(${change}px)`;
+
+        if (change > 150) {
+          imgContain.removeEventListener('touchmove', handleTouchMove);
+          handleLike(imgContain.dataset.image, imgContain.dataset.name);
+        } else if (change < -150) {
+          imgContain.removeEventListener('touchmove', handleTouchMove);
+          handleDelete(imgContain.dataset.image, imgContain.dataset.name);
+        }
+      };
+
+      heartIcon.addEventListener('click', () => handleLike(imgContain.dataset.image, imgContain.dataset.name));
+      trashIcon.addEventListener('click', () => handleDelete(imgContain.dataset.image, imgContain.dataset.name));
+
+      let startX;
+      imgContain.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+
+      imgContain.addEventListener('touchmove', handleTouchMove);
+
+      imgContain.addEventListener('touchend', () => {
+        imgContain.style.transform = 'translateX(0)';
+        imgContain.addEventListener('touchmove', handleTouchMove);
+      });
+
+      imgContain.addEventListener('click', (e) => {
+        options.style.display = options.style.display === 'none' ? 'block' : 'none';
+      });
+
+      window.addEventListener('click', (e) => {
+        if (!imgContain.contains(e.target)) {
+          options.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

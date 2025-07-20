@@ -1,0 +1,154 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: rgb(106, 104, 104);
+}
+
+/* 导航栏样式 */
+
+
+/* 主要内容区域 */
+.content {
+    padding: 20px;
+}
+
+article {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+
+
+article h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+article small {
+    color: #888;
+}
+
+article p {
+    margin-bottom: 15px;
+}
+
+/* 分页导航 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-list a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination-link:hover {
+    background-color: #ddd;
+}
+
+/* 页脚样式 */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.footer-link a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.app-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.app-title {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.section {
+    margin: 20px;
+}
+
+.game-title a {
+    text-decoration: none;
+}        
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.game-card {
+    background-color: black;
+    border-radius: 8px;
+    margin: 10px;
+    width: 160px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 3 / 5;
+    object-fit: cover; /* 保持纵横比，同时填充整个元素的内容框 */
+    border-radius: 8px;
+}
+
+.game-title {
+    margin: 10px 0;
+    color: antiquewhite;
+}
+
+.game-title img {
+    height: 1em; /* 设置图片高度与当前字体大小相同 */
+    width: auto; /* 保持图片的宽高比 */
+    margin-right: 5px; /* 在图片和文字之间添加一些间隔 */
+}
+
+.game-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.selected {
+    border: 2px solid #4c93af;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 按钮之间的间距 */
+    margin-top: 20px; /* 顶部间距 */
+}
+.simple-button {
+    background-color: #899f89; /* 绿色背景 */
+    color: white; /* 白色文字 */
+    padding: 8px 16px; /* 内边距 */
+    border: none; /* 去除边框 */
+    border-radius: 4px; /* 圆角 */
+    font-size: 14px; /* 字体大小 */
+}
+
+#createButton {
+    background-color: #8466c5; /* 红色背景 */
+}

@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+  }
+  .header {
+    color: rgb(237, 233, 233);
+    text-align: center;
+    font-size: 36px;
+  }
+  .timestamp {
+    color: rgb(237, 233, 233);
+    font-size: 1.5em;
+    text-align: justify;
+    margin: 40px;
+  }
+  .content {
+    color: rgb(237, 233, 233);
+    margin: 40px;
+  }
+  label {
+    color: rgb(237, 233, 233);
+  }
+  .gallery {
+    width: 100vw;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .img-contain {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .img-contain.liked {
+    width: 100%; /* liked 图片占据 100% 宽度 */
+    border: 2px solid rgb(226, 90, 41);
+  }
+  .img-contain img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  .img-contain.portrait img {
+    width: 100%; /* 竖向图片宽度为 50% */
+    height: auto;
+  }
+  .img-contain.portrait.side-by-side {
+    width: 48%; /* 并排显示时宽度为 48% */
+    margin-bottom: 10px;
+  }
+  .img-contain .icons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  .img-contain .icons i {
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .img-contain .icons i:hover {
+    color: #f00;
+  }
+  .options {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+    z-index: 10;
+  }
+  .option {
+    margin: 5px;
+    cursor: pointer;
+  }
+  #ratingForm {
+    background: #040404;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  #ratingForm label {
+    margin: 10px 0;
+    font-size: 18px;
+  }
+  #ratingForm input[type="radio"] {
+    margin-right: 10px;
+  }
+  #ratingForm input[type="radio"] + label {
+    display: inline-block;
+  }
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
